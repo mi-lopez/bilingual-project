@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
-    "start": "next start",
-    "postinstall": "prisma generate",
-    "lint": "next lint"
+    "deploy:db": "prisma migrate deploy && npm run seed",
+    "seed": "node prisma/seed.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
