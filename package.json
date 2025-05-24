@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push && npm run seed && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "deploy:db": "prisma db push && npm run seed",
     "seed": "node prisma/seed.js"
   },
   "prisma": {
