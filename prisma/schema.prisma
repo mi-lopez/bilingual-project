@@ -1,0 +1,118 @@
+// /models/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Usuarios (Padres/Profesores)
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  password       String   // Hashed password
+  role           Role     @default(PARENT)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  students       Student[]
+  courses        Course[] // Para profesores
+  cards          Card[]   // Tarjetas creadas por el usuario
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  PARENT
+}
+
+// Estudiantes (Niños)
+model Student {
+  id             String   @id @default(cuid())
+  name           String
+  avatarUrl      String?
+  age            Int?
+  parentId       String
+  parent         User     @relation(fields: [parentId], references: [id])
+  courseId       String?
+  course         Course?  @relation(fields: [courseId], references: [id])
+  progress       Progress[]
+  achievements   Achievement[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Cursos
+model Course {
+  id             String   @id @default(cuid())
+  name           String
+  description    String?
+  teacherId      String
+  teacher        User     @relation(fields: [teacherId], references: [id])
+  students       Student[]
+  cardSets       CardSet[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Conjunto de tarjetas (para agrupar por temas/niveles)
+model CardSet {
+  id             String   @id @default(cuid())
+  name           String
+  description    String?
+  level          Int      @default(1)
+  courseId       String
+  course         Course   @relation(fields: [courseId], references: [id])
+  cards          Card[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Tarjetas educativas
+model Card {
+  id             String   @id @default(cuid())
+  imageUrl       String
+  spanishWord    String
+  englishWord    String
+  audioSpanish   String?  // URL al audio pregrabado o null si se usa TTS
+  audioEnglish   String?  // URL al audio pregrabado o null si se usa TTS
+  difficulty     Int      @default(1)
+  createdById    String
+  createdBy      User     @relation(fields: [createdById], references: [id])
+  cardSetId      String
+  cardSet        CardSet  @relation(fields: [cardSetId], references: [id])
+  progress       Progress[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Progreso del estudiante
+model Progress {
+  id             String   @id @default(cuid())
+  studentId      String
+  student        Student  @relation(fields: [studentId], references: [id])
+  cardId         String
+  card           Card     @relation(fields: [cardId], references: [id])
+  attempts       Int      @default(0)
+  successCount   Int      @default(0)
+  lastAttempted  DateTime @default(now())
+  mastered       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Logros/Premios
+model Achievement {
+  id             String   @id @default(cuid())
+  name           String
+  description    String
+  imageUrl       String
+  type           String   // e.g. "streak", "mastery", "completion"
+  threshold      Int      // Número requerido para desbloquear
+  students       Student[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
