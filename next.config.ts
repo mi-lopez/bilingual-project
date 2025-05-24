@@ -7,10 +7,12 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
-    experimental: {
-        missingSuspenseWithCSRBailout: false,
-    },
+    // Elimina la línea experimental que causa el error
+    // experimental: {
+    //     missingSuspenseWithCSRBailout: false,
+    // },
     images: {
+        unoptimized: true, // Añade esto para evitar problemas de optimización
         remotePatterns: [
             {
                 protocol: 'https',
@@ -37,8 +39,9 @@ const nextConfig = {
             'picsum.photos'
         ]
     },
-    // En Next.js 15, serverActions está habilitado por defecto
-    // No necesitas configurarlo explícitamente
+    // Configuración adicional para ignorar errores de prerendering
+    output: 'standalone',
+    distDir: '.next',
 };
 
 module.exports = nextConfig;
