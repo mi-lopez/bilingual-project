@@ -7,12 +7,8 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
-    // Elimina la línea experimental que causa el error
-    // experimental: {
-    //     missingSuspenseWithCSRBailout: false,
-    // },
     images: {
-        unoptimized: true, // Añade esto para evitar problemas de optimización
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: 'https',
@@ -32,16 +28,15 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',
             },
-        ],
-        domains: [
-            'images.unsplash.com',
-            'via.placeholder.com',
-            'picsum.photos'
         ]
     },
-    // Configuración adicional para ignorar errores de prerendering
-    output: 'standalone',
-    distDir: '.next',
+    // Ignorar errores de prerenderizado
+    experimental: {
+        forceSwcTransforms: true,
+    },
+    // Evitar problemas de generación estática
+    trailingSlash: false,
+    poweredByHeader: false,
 };
 
 module.exports = nextConfig;
