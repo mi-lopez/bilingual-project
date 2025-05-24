@@ -254,22 +254,6 @@ export default function LoginPage() {
                             }
                         </button>
                     </div>
-
-                    {/* Demo accounts */}
-                    {/*<div className="mt-6 p-4 bg-gray-50 rounded-lg">*/}
-                    {/*    <h3 className="text-sm font-medium text-gray-700 mb-2">Cuentas de demostración:</h3>*/}
-                    {/*    <div className="text-xs text-gray-600 space-y-1">*/}
-                    {/*        <div>*/}
-                    {/*            <strong>Padre:</strong> padre@demo.com / password123*/}
-                    {/*        </div>*/}
-                    {/*        <div>*/}
-                    {/*            <strong>Profesor:</strong> profesor@demo.com / password123*/}
-                    {/*        </div>*/}
-                    {/*        <div>*/}
-                    {/*            <strong>Admin:</strong> admin@demo.com / password123*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </motion.div>
 
                 {/* Footer */}
@@ -279,16 +263,6 @@ export default function LoginPage() {
                     transition={{ delay: 0.2 }}
                     className="text-center mt-8 text-sm text-gray-500"
                 >
-                    {/*<p>*/}
-                    {/*    Al continuar, aceptas nuestros{' '}*/}
-                    {/*    <Link href="/terms" className="text-indigo-600 hover:text-indigo-700">*/}
-                    {/*        términos de servicio*/}
-                    {/*    </Link>{' '}*/}
-                    {/*    y{' '}*/}
-                    {/*    <Link href="/privacy" className="text-indigo-600 hover:text-indigo-700">*/}
-                    {/*        política de privacidad*/}
-                    {/*    </Link>*/}
-                    {/*</p>*/}
                 </motion.div>
             </div>
         </div>
